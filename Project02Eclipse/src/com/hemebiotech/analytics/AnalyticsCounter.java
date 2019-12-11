@@ -1,46 +1,31 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class AnalyticsCounter {
-	private static int headCount = 0;
-	private static int rashCount = 0;
-	private static int pupilCount = 0;
 
-	public static void main(String args[]) throws Exception {
-		// first get input
-		BufferedReader reader = new BufferedReader(new FileReader(
-				"D:\\projetoc1\\Project_DA_Java_EN_Come_to_the_Rescue_of_a_Java_Application\\Project02Eclipse\\symptoms.txt"));
-		String line = reader.readLine();
+	public static void main(String args[]) throws FileNotFoundException, IOException {
 
-		int i = 0;
+		String filepath = "D:\\projetoc1\\Project_DA_Java_EN_Come_to_the_Rescue_of_a_Java_Application\\Project02Eclipse\\symptoms.txt";
 
-		while (line != null) {
-			i++;
+		ReadSymptomDataFromFile file = new ReadSymptomDataFromFile(filepath);
 
-			if (line.equals("headache")) {
-				headCount++;
+		// System.out.println(file.GetSymptoms());
 
-			} else if (line.equals("rash")) {
-				rashCount++;
-			} else if (line.equals("dialated pupils")) {
-				pupilCount++;
-			}
+		SymptomAnalyse hm = new SymptomAnalyse(file.GetSymptoms());
 
-			line = reader.readLine(); // get another symptom
+		hm.occurencesSortedSymptoms();
+
+		for (int i = 0; i < hm.occurencesSortedSymptoms().size(); i++) {
+
+			System.out.println(hm.occurencesSortedSymptoms().keySet().toArray()[i] + " = "
+					+ hm.occurencesSortedSymptoms().values().toArray()[i]);
+
 		}
-		System.out.println("number of headaches: " + headCount);
-		System.out.println("number of rash: " + rashCount);
-		System.out.println("number of dialated pupils: " + pupilCount);
 
-		// next generate output
-		FileWriter writer = new FileWriter("result.out");
-		writer.write("headache: " + headCount + "\n");
-		writer.write("rash: " + rashCount + "\n");
-		writer.write("dialated pupils: " + pupilCount + "\n");
-		reader.close();
-		writer.close();
+		SymptomAnalyse result = new SymptomAnalyse(hm.occurencesSortedSymptoms());
+		result.writeSymptoms();
+
 	}
 }
