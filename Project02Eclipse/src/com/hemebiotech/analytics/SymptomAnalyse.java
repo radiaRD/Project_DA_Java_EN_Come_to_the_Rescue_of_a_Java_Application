@@ -24,7 +24,7 @@ public class SymptomAnalyse {
 	int i;
 
 	/**
-	 * @param listSymptoms list of symptoms get from filepath.
+	 * @param listSymptoms list of symptoms get from file path.
 	 */
 	public SymptomAnalyse(List<String> listSymptoms) {
 		this.listSymptoms = (ArrayList<String>) listSymptoms;
